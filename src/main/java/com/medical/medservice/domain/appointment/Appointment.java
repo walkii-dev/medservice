@@ -3,7 +3,7 @@ package com.medical.medservice.domain.appointment;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity(name = "Appointment")
 @Table(name = "consultas")
 @Getter
 @Setter
@@ -20,4 +20,12 @@ public class Appointment {
     private String appointmentDateAndHour;
     private String weather;
     private String observations;
+
+    public Appointment(AppointmentCreationDTO data){
+        this.medic = data.medic();
+        this.patient = data.patient();
+        this.appointmentDateAndHour = data.appointmentDateAndHour();
+        this.weather = data.weather();
+        this.observations = data.observations();
+    }
 }
