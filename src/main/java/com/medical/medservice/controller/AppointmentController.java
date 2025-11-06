@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +45,9 @@ public class AppointmentController {
 
     @GetMapping
     public ResponseEntity<Page<AppointmentListingDTO>> listAppointments (@RequestParam(value = "pages", defaultValue = "0") Integer pages,
-                                                                         @RequestParam(value = "size", defaultValue = "12") Integer size){
-
-        var page = service.listAppointments(pages,size);
-
+                                                                               @RequestParam(value = "size", defaultValue = "12") Integer size){
+        Pageable pageable = PageRequest.of(pages, size);
+        var page = service.listAppointments(pageable);
 
         return ResponseEntity.ok(page);
     }
