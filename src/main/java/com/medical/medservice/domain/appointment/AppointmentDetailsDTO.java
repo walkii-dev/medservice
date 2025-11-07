@@ -5,13 +5,16 @@ public record AppointmentDetailsDTO(Long id,
                                     String patient,
                                     String appointmentDateAndHour,
                                     String weather,
-                                    String observations) {
+                                    String observations,
+                                    Status status) {
+
     public AppointmentDetailsDTO(Appointment appointment){
         this(appointment.getId(),
                 appointment.getMedic(),
                 appointment.getPatient(),
                 appointment.getAppointmentDateAndHour(),
                 appointment.getWeather(),
-                appointment.getObservations());
+                appointment.getObservations(),
+                appointment.getStatus());
     }
 }

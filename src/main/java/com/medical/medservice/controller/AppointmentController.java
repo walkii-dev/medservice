@@ -2,12 +2,11 @@ package com.medical.medservice.controller;
 
 import com.medical.medservice.domain.appointment.*;
 import com.medical.medservice.repository.AppointmentRepository;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -45,11 +44,27 @@ public class AppointmentController {
 
     @GetMapping
     public ResponseEntity<Page<AppointmentListingDTO>> listAppointments (@RequestParam(value = "pages", defaultValue = "0") Integer pages,
-                                                                               @RequestParam(value = "size", defaultValue = "12") Integer size){
+                                                                               @RequestParam(value = "size", defaultValue = "10") Integer size){
         Pageable pageable = PageRequest.of(pages, size);
         var page = service.listAppointments(pageable);
 
         return ResponseEntity.ok(page);
     }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity update(@RequestBody AppointmentRefreshDTO refreshData){
+        var appointment = repository.getReferenceById(refreshData.id());
+        appointment.updateAppointment(refreshData);
+        return ResponseEntity.ok(new AppointmentDetailsDTO(appointment));
+    }
+
+    @DeleteMapping("{id}")
+    @Transactional
+    public ResponseEntity cancel(@PathVariable Long id){
+        repository.getReferenceById(id).cancel();
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
