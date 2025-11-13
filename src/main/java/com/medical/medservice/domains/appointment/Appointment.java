@@ -1,7 +1,9 @@
-package com.medical.medservice.domain.appointment;
+package com.medical.medservice.domains.appointment;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Entity(name = "Appointment")
 @Table(name = "consultas")
@@ -14,12 +16,12 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String medic;
     private String patient;
-    private String appointmentDateAndHour;
+    private LocalDate appointmentDateAndHour;
     private String weather;
     private String observations;
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Appointment(AppointmentCreationDTO data){

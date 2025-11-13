@@ -1,4 +1,4 @@
-package com.medical.medservice.domain.weather;
+package com.medical.medservice.domains.weather;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,9 +1,11 @@
-package com.medical.medservice.domain.appointment;
+package com.medical.medservice.domains.appointment;
+
+import java.time.LocalDate;
 
 public record AppointmentDetailsDTO(Long id,
                                     String medic,
                                     String patient,
-                                    String appointmentDateAndHour,
+                                    LocalDate appointmentDateAndHour,
                                     String weather,
                                     String observations,
                                     Status status) {

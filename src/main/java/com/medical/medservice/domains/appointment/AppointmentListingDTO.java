@@ -1,9 +1,11 @@
-package com.medical.medservice.domain.appointment;
+package com.medical.medservice.domains.appointment;
+
+import java.time.LocalDate;
 
 public record AppointmentListingDTO(Long id,
                                     String medic,
                                     String patient,
-                                    String appointmentDateAndHour) {
+                                    LocalDate appointmentDateAndHour) {
     public AppointmentListingDTO (Appointment appointment){
         this(appointment.getId(),
                 appointment.getMedic(),

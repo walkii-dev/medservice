@@ -1,7 +1,9 @@
-package com.medical.medservice.domain.appointment;
+package com.medical.medservice.domains.appointment;
+
+import java.time.LocalDate;
 
 public record AppointmentRefreshDTO(Long id,
                                     String medic,
-                                    String appointmentDateAndHour,
+                                    LocalDate appointmentDateAndHour,
                                     String observations) {
 }
