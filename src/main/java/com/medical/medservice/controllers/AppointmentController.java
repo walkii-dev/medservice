@@ -1,8 +1,10 @@
-package com.medical.medservice.controller;
+package com.medical.medservice.controllers;
 
-import com.medical.medservice.domain.appointment.*;
-import com.medical.medservice.repository.AppointmentRepository;
-import org.apache.coyote.Response;
+import com.medical.medservice.domains.appointment.*;
+import com.medical.medservice.infra.exceptions.AppointmentException;
+import com.medical.medservice.repositories.AppointmentRepository;
+import com.medical.medservice.services.AppointmentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/consultas")
@@ -26,9 +26,14 @@ public class AppointmentController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity createAppointment (@RequestBody AppointmentCreationDTO data, UriComponentsBuilder uriBuilder){
-
+    public ResponseEntity createAppointment (@RequestBody @Valid AppointmentCreationDTO data, UriComponentsBuilder uriBuilder){
         var appointment = new Appointment(data);
+
+        try{
+            service.checkDisponibility(appointment);
+        }catch(AppointmentException exception){
+            return ResponseEntity.status(400).body(exception.getMessage());
+        }
 
         repository.save(appointment);
 
