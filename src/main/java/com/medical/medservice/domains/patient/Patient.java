@@ -1,4 +1,4 @@
-package com.medical.medservice.domains.medic;
+package com.medical.medservice.domains.patient;
 
 import com.medical.medservice.domains.appointment.Appointment;
 import com.medical.medservice.domains.user.User;
@@ -7,15 +7,14 @@ import lombok.*;
 
 import java.util.List;
 
-
 @Entity
-@Table(name = "medicos")
+@Table(name = "patients")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Medic {
+public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,15 +23,13 @@ public class Medic {
     private String firstName;
     private String lastName;
 
-    private String crm;
+    @Embedded
+    private Address address;
 
-    @Enumerated(EnumType.STRING)
-    private Speciality speciality;
+    private String cpf;
 
     private User user;
 
-    @OneToMany
-    private List<Appointment> Appointments;
-
-
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<Appointment> appointmentList;
 }

@@ -17,13 +17,12 @@ public class AppointmentService {
     @Autowired
     private AppointmentRepository repository;
 
-    public void checkDisponibility (Appointment appointment){
+    public Appointment checkDisponibility (Appointment appointment){
         Optional<Appointment> search = repository.existsByAppointmentDateAndHour(appointment.getAppointmentDateAndHour());
         if (search.isPresent()){
             throw new AppointmentException("já existe uma consulta nesta mesma data");
-        } else {
-            System.out.println("não tem.");
         }
+        return search.get();
     }
 
     public Page<AppointmentListingDTO> listAppointments (Pageable pageable){

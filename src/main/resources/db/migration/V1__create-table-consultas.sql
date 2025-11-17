@@ -4,6 +4,6 @@ CREATE TABLE consultas (
     patient VARCHAR(100) NOT NULL,
     appointment_date_and_hour DATE NOT NULL,
     weather VARCHAR(100),
-    observations VARCHAR(100),
+    observations VARCHAR(200),
     PRIMARY KEY (id)
 );

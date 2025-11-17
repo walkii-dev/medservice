@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/consultas")
+@RequestMapping("/appointments")
 public class AppointmentController {
 
     @Autowired
@@ -37,7 +37,7 @@ public class AppointmentController {
 
         repository.save(appointment);
 
-        var uri = uriBuilder.path("/consultas/{id}").buildAndExpand(appointment.getId()).toUri();
+        var uri = uriBuilder.path("/appointments/{id}").buildAndExpand(appointment.getId()).toUri();
         return ResponseEntity.created(uri).body(new AppointmentDetailsDTO(appointment));
     }
 
